@@ -94,10 +94,16 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         do {
             // Note the .playAndRecord required as we want the video audio to continue
             // playing while we record audio
+            
             // The mode: .voiceChat enables the tonal optimization and will minimize the
             // audio coming from the other channels
             // This is the out-of-the-box mode, for finer grained control we can look at
             // Remote IO / Audio Units that IOs provides
+            
+            // The options: AVAudioSession.CategoryOptions.defaultToSpeaker will ensure
+            // The audio continues out of the speaker and not the deafult of the headset
+            // [when available].  Note the recording fidelity would be cleaner via the
+            // headset as we would have fewer articats to remove
             
             try recordingSession.setCategory(.playAndRecord, mode: .voiceChat, options: AVAudioSession.CategoryOptions.defaultToSpeaker)
             

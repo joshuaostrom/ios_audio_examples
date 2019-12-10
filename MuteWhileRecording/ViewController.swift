@@ -3,7 +3,6 @@
 //  MuteWhileRecording
 //
 //  Created by JOSHUA OSTROM on 12/8/19.
-//  Copyright © 2019 JOSHUA OSTROM. All rights reserved.
 //
 
 import UIKit
@@ -27,13 +26,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // If we wanted to Fade one could look at a
-        //
-        //    try! AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
-        //                              options: //AVAudioSession.CategoryOptions.mixWithOthers)
-        //
-        // here and then a setVolume(0, fadeDuration: 3) OR equiv fade
         prepAudioSession()
         setupButtons()
     }
@@ -113,7 +105,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
             // options: AVAudioSession.CategoryOptions.mixWithOthers
             // options: AVAudioSession.CategoryOptions.duckOthers
             
-            
             try recordingSession.setActive(true)
             recordingSession.requestRecordPermission() { [unowned self] allowed in
                 DispatchQueue.main.async {
@@ -121,7 +112,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
                 }
             }
         } catch {
-            // failed to record!
+            // failed to record
         }
      }
 
@@ -146,7 +137,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
             }
         }
     }
-    
     
     
     func stopRecordingAudio(){
@@ -177,7 +167,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
             audioPlayer = try AVAudioPlayer(contentsOf: audioFilename)
             audioPlayer?.play()
         } catch {
-            // couldn't load file :(
+            // couldn't load file
         }
     }
     
@@ -205,52 +195,5 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         }
         return false
     }
-    
-    // If we wanted to Fade one could look at a
-    //
-    //    try! AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
-    //                              options: //AVAudioSession.CategoryOptions.mixWithOthers)
-    //
-    // here and then a setVolume(0, fadeDuration: 3) OR equiv fade
-    
-    
-    
-    
-    
- /*
-    // Not currently using but a best practice to watch for audio route changes
-    // https://developer.apple.com/documentation/avfoundation/avaudiosession/responding_to_audio_session_route_changes
-    func registerForNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleInterruption),
-                                               name: AVAudioSession.interruptionNotification,
-                                               object: AVAudioSession.sharedInstance())
-    }
-    
-    @objc
-    func handleInterruption(_ notification: Notification) {
-        
-        guard let info = notification.userInfo,
-            let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
-            let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
-                return
-        }
-        if type == .began {
-            print("Interruption began, take appropriate actions (save state, update user interface)")
-        }
-        else if type == .ended {
-            guard let optionsValue =
-                info[AVAudioSessionInterruptionOptionKey] as? UInt else {
-                    return
-            }
-            let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
-            if options.contains(.shouldResume) {
-                print("Interruption Ended - playback should resume")
-            }
-        }
-        
-    }
- */
-
 }
 
